@@ -1,5 +1,14 @@
 import React, { useState } from 'react';
-import { Card, CardContent, CardActions, Button, Typography, Box, TextField, MenuItem } from '@mui/material';
+import {
+    Card,
+    CardContent,
+    CardActions,
+    Button,
+    Typography,
+    TextField,
+    MenuItem,
+    Chip,
+} from '@mui/material';
 import { Note, NoteCategory } from '../types/Note';
 
 interface NoteItemProps {
@@ -32,6 +41,7 @@ const NoteItem: React.FC<NoteItemProps> = ({ note, onArchive, onDelete, onEdit }
     const handleCategoryChange = (event: React.ChangeEvent<{ value: unknown }>) => {
         setEditedCategories(event.target.value as NoteCategory[]);
     };
+
     return (
         <Card sx={{ border: note.archived ? '1px solid #ccc' : 'none', backgroundColor: note.archived ? '#f0f0f0' : 'transparent' }}>
             <CardContent>
@@ -61,7 +71,13 @@ const NoteItem: React.FC<NoteItemProps> = ({ note, onArchive, onDelete, onEdit }
                             fullWidth
                             SelectProps={{
                                 multiple: true,
-                                renderValue: (selected) => (selected as NoteCategory[]).join(', '),
+                                renderValue: (selected) => (
+                                    <>
+                                        {(selected as NoteCategory[]).map((category) => (
+                                            <Chip key={category} label={category} sx={{ mr: 1, mb: 1 }} />
+                                        ))}
+                                    </>
+                                ),
                             }}
                             sx={{ mb: 2 }}
                         >
@@ -77,14 +93,14 @@ const NoteItem: React.FC<NoteItemProps> = ({ note, onArchive, onDelete, onEdit }
                         <Typography variant="h5" component="div">
                             {note.title}
                         </Typography>
-                        <Typography variant="body2">
+                        <Typography variant="body2" sx={{ mb: 1 }}>
                             {note.content}
                         </Typography>
-                        {note.categories != null && note.categories.map((category)=>{
-                          return <Typography variant="body2">
-                          {category}
-                      </Typography>
-                        })}
+                        <div>
+                            {note.categories.map((category) => (
+                                <Chip key={category} label={category} variant="outlined" color="primary" sx={{ mr: 1, mb: 1 }} />
+                            ))}
+                        </div>
                     </>
                 )}
             </CardContent>
