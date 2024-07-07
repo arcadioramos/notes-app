@@ -115,7 +115,7 @@ const NoteItem: React.FC<NoteItemProps> = ({ note, onArchive, onDelete, onEdit }
                     </Button>
                 )}
                 <Button size="small" color="primary" onClick={onArchive}>
-                    {note.archived ? 'Desarchivar' : 'Archivar'}
+                    {note.archived ? 'Unarchive' : 'Archive'}
                 </Button>
                 <Button size="small" color="secondary" onClick={onDelete}>
                     Delete
